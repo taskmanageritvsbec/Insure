@@ -5,7 +5,6 @@
       "root": "backend",
       "framework": "express",
       "buildCommand": "npm run build",
-      "entrypoint": "dist/server.js",
       "bindings": [
         {
           "type": "service",
