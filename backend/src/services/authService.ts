@@ -343,12 +343,12 @@ export async function login({ email, password }: any): Promise<any> {
 
   if (!user || !user.password_hash) {
     await bcrypt.compare(password, '$2a$10$abcdefghijklmnopqrstuvwxyz1234567890123456789012345678');
-    throw new Error('Invalid email or password.');
+    throw authError(401, 'Invalid email or password.');
   }
 
   const isValidPassword = await bcrypt.compare(password, user.password_hash);
   if (!isValidPassword) {
-    throw new Error('Invalid email or password.');
+    throw authError(401, 'Invalid email or password.');
   }
 
   if (!user.is_email_verified || user.status === 'pending_verification') {
