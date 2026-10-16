@@ -277,24 +277,24 @@ export default function ProfitabilityPage() {
   return (
     <div className="space-y-6 animate-fadeIn pb-12">
       {/* ── Top Header ──────────────────────────────────────────────────────── */}
-      <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4 border-b border-white/10 pb-5">
+      <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4 border-b border-slate-200 dark:border-white/10 pb-5">
         <div>
           <div className="flex items-center gap-2">
-            <span className="px-2.5 py-0.5 rounded-full text-xs font-semibold bg-emerald-500/20 text-emerald-400 border border-emerald-500/30">
+            <span className="px-2.5 py-0.5 rounded-full text-xs font-semibold bg-emerald-500/20 text-emerald-600 dark:text-emerald-400 border border-emerald-500/30">
               Actuarial Engine v2.1
             </span>
-            <span className="px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-500/20 text-blue-400 border border-blue-500/30">
+            <span className="px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-500/20 text-blue-600 dark:text-blue-400 border border-blue-500/30">
               Currency: INR (₹)
             </span>
-            <span className="px-2.5 py-0.5 rounded-full text-xs font-medium bg-purple-500/20 text-purple-400 border border-purple-500/30">
+            <span className="px-2.5 py-0.5 rounded-full text-xs font-medium bg-purple-500/20 text-purple-600 dark:text-purple-400 border border-purple-500/30">
               Trip Distance Decoupled
             </span>
           </div>
-          <h1 className="text-2xl font-bold text-white mt-1.5 flex items-center gap-2">
-            <TrendingUp className="w-6 h-6 text-brand-400" />
+          <h1 className="text-2xl font-bold text-slate-800 dark:text-white mt-1.5 flex items-center gap-2">
+            <TrendingUp className="w-6 h-6 text-brand-600 dark:text-brand-400" />
             Customer Growth & Profitability Simulator
           </h1>
-          <p className="text-slate-400 text-sm mt-0.5">
+          <p className="text-slate-500 dark:text-slate-400 text-sm mt-0.5">
             Evaluate competitive premium pricing, customer retention elasticity, and sustainable underwriting profit.
           </p>
         </div>
