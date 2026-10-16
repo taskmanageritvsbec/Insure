@@ -313,9 +313,9 @@ export default function ProfitabilityPage() {
           <button
             onClick={handleSaveScenario}
             disabled={saving}
-            className="flex items-center gap-2 px-3.5 py-2 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 border border-white/10 font-medium text-xs transition-all disabled:opacity-50"
+            className="flex items-center gap-2 px-3.5 py-2 rounded-lg bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 border border-slate-200 dark:border-white/10 font-medium text-xs transition-all disabled:opacity-50 shadow-xs"
           >
-            {savedSuccess ? <Check className="w-4 h-4 text-emerald-400" /> : <Save className="w-4 h-4" />}
+            {savedSuccess ? <Check className="w-4 h-4 text-emerald-500 dark:text-emerald-400" /> : <Save className="w-4 h-4" />}
             {savedSuccess ? 'Saved to DB!' : saving ? 'Saving...' : 'Save Scenario'}
           </button>
         </div>
@@ -324,12 +324,12 @@ export default function ProfitabilityPage() {
       {error && <ErrorBanner message={error} onRetry={() => loadInitialData()} />}
 
       {/* ── Preset Scenario Selector ───────────────────────────────────────── */}
-      <div className="bg-slate-900/60 backdrop-blur-md rounded-xl p-4 border border-white/10 flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+      <div className="bg-white dark:bg-slate-900 rounded-2xl p-5 border border-slate-200/80 dark:border-slate-800 shadow-xs flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
         <div>
-          <span className="text-xs uppercase tracking-wider text-slate-400 font-semibold block mb-1">
+          <span className="text-xs uppercase tracking-wider text-slate-500 dark:text-slate-400 font-bold block mb-1">
             Actuarial Scenario Presets
           </span>
-          <p className="text-slate-300 text-xs">
+          <p className="text-slate-600 dark:text-slate-300 text-xs">
             Quickly compare pre-configured market projections against the pre-INSURE baseline.
           </p>
         </div>
@@ -340,7 +340,7 @@ export default function ProfitabilityPage() {
             className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-all ${
               activePreset === 'conservative'
                 ? 'bg-amber-600 text-white shadow-md shadow-amber-900/30 ring-1 ring-amber-400'
-                : 'bg-slate-800 text-slate-300 hover:bg-slate-700 border border-white/5'
+                : 'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700 border border-slate-200 dark:border-white/5'
             }`}
           >
             Conservative (1,100 Cust)
@@ -351,7 +351,7 @@ export default function ProfitabilityPage() {
             className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-all ${
               activePreset === 'expected'
                 ? 'bg-brand-600 text-white shadow-md shadow-brand-900/30 ring-1 ring-brand-400'
-                : 'bg-slate-800 text-slate-300 hover:bg-slate-700 border border-white/5'
+                : 'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700 border border-slate-200 dark:border-white/5'
             }`}
           >
             Expected (1,300 Cust — Section 8)
@@ -362,7 +362,7 @@ export default function ProfitabilityPage() {
             className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-all ${
               activePreset === 'optimistic'
                 ? 'bg-emerald-600 text-white shadow-md shadow-emerald-900/30 ring-1 ring-emerald-400'
-                : 'bg-slate-800 text-slate-300 hover:bg-slate-700 border border-white/5'
+                : 'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700 border border-slate-200 dark:border-white/5'
             }`}
           >
             Optimistic (1,500 Cust)
@@ -373,159 +373,157 @@ export default function ProfitabilityPage() {
       {/* ── Before & After Financial Comparison (Section 8) ─────────────────── */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
         {/* Baseline: BEFORE INSURE */}
-        <div className="bg-slate-900/70 border border-white/10 rounded-2xl p-5 relative overflow-hidden">
-          <div className="absolute top-0 right-0 w-32 h-32 bg-slate-700/10 rounded-full blur-2xl pointer-events-none" />
-          <div className="flex items-center justify-between mb-4 border-b border-white/10 pb-3">
+        <div className="bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 rounded-2xl p-5 relative overflow-hidden shadow-xs">
+          <div className="flex items-center justify-between mb-4 border-b border-slate-200/80 dark:border-white/10 pb-3">
             <div>
-              <span className="text-[11px] font-bold uppercase tracking-wider text-slate-400 bg-slate-800 px-2 py-0.5 rounded">
+              <span className="text-[11px] font-bold uppercase tracking-wider text-slate-600 dark:text-slate-400 bg-slate-100 dark:bg-slate-800 px-2 py-0.5 rounded border border-slate-200 dark:border-transparent">
                 Section 8 Benchmark
               </span>
-              <h2 className="text-lg font-bold text-slate-200 mt-1">BEFORE INSURE (Baseline)</h2>
+              <h2 className="text-lg font-bold text-slate-800 dark:text-slate-100 mt-1">BEFORE INSURE (Baseline)</h2>
             </div>
-            <span className="text-xs text-slate-400">Starting Portfolio</span>
+            <span className="text-xs text-slate-500 dark:text-slate-400 font-medium">Starting Portfolio</span>
           </div>
 
           <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
-            <div className="bg-slate-800/60 rounded-xl p-3 border border-white/5">
-              <span className="text-[11px] text-slate-400 uppercase tracking-wide">Customers</span>
-              <p className="text-xl font-bold text-white mt-0.5">
+            <div className="bg-slate-50 dark:bg-slate-800/60 rounded-xl p-3.5 border border-slate-200/60 dark:border-white/5">
+              <span className="text-[11px] text-slate-500 dark:text-slate-400 font-semibold uppercase tracking-wide">Customers</span>
+              <p className="text-xl font-bold text-slate-900 dark:text-white mt-0.5">
                 {baseline?.customer_count.toLocaleString() ?? '1,000'}
               </p>
-              <span className="text-[10px] text-slate-500">Commercial baseline</span>
+              <span className="text-[10px] text-slate-500 dark:text-slate-400">Commercial baseline</span>
             </div>
 
-            <div className="bg-slate-800/60 rounded-xl p-3 border border-white/5">
-              <span className="text-[11px] text-slate-400 uppercase tracking-wide">Avg Annual Premium</span>
-              <p className="text-xl font-bold text-white mt-0.5">
+            <div className="bg-slate-50 dark:bg-slate-800/60 rounded-xl p-3.5 border border-slate-200/60 dark:border-white/5">
+              <span className="text-[11px] text-slate-500 dark:text-slate-400 font-semibold uppercase tracking-wide">Avg Annual Premium</span>
+              <p className="text-xl font-bold text-slate-900 dark:text-white mt-0.5">
                 {formatINR(baseline?.avg_annual_premium ?? 2000)}
               </p>
-              <span className="text-[10px] text-slate-500">No safe discount</span>
+              <span className="text-[10px] text-slate-500 dark:text-slate-400">No safe discount</span>
             </div>
 
-            <div className="bg-slate-800/60 rounded-xl p-3 border border-white/5">
-              <span className="text-[11px] text-slate-400 uppercase tracking-wide">Premium Revenue</span>
-              <p className="text-xl font-bold text-blue-400 mt-0.5">
+            <div className="bg-slate-50 dark:bg-slate-800/60 rounded-xl p-3.5 border border-slate-200/60 dark:border-white/5">
+              <span className="text-[11px] text-slate-500 dark:text-slate-400 font-semibold uppercase tracking-wide">Premium Revenue</span>
+              <p className="text-xl font-bold text-blue-600 dark:text-blue-400 mt-0.5">
                 {formatINR(baseline?.premium_revenue ?? 2000000)}
               </p>
-              <span className="text-[10px] text-slate-500">1,000 × ₹2,000</span>
+              <span className="text-[10px] text-slate-500 dark:text-slate-400">1,000 × ₹2,000</span>
             </div>
 
-            <div className="bg-slate-800/60 rounded-xl p-3 border border-white/5">
-              <span className="text-[11px] text-slate-400 uppercase tracking-wide">Claims Incurred</span>
-              <p className="text-xl font-bold text-amber-400 mt-0.5">
+            <div className="bg-slate-50 dark:bg-slate-800/60 rounded-xl p-3.5 border border-slate-200/60 dark:border-white/5">
+              <span className="text-[11px] text-slate-500 dark:text-slate-400 font-semibold uppercase tracking-wide">Claims Incurred</span>
+              <p className="text-xl font-bold text-amber-600 dark:text-amber-400 mt-0.5">
                 {formatINR(baseline?.claims_incurred ?? 1200000)}
               </p>
-              <span className="text-[10px] text-slate-500">60.0% claims ratio</span>
+              <span className="text-[10px] text-slate-500 dark:text-slate-400">60.0% claims ratio</span>
             </div>
 
-            <div className="bg-slate-800/60 rounded-xl p-3 border border-white/5">
-              <span className="text-[11px] text-slate-400 uppercase tracking-wide">Operating Expenses</span>
-              <p className="text-xl font-bold text-slate-300 mt-0.5">
+            <div className="bg-slate-50 dark:bg-slate-800/60 rounded-xl p-3.5 border border-slate-200/60 dark:border-white/5">
+              <span className="text-[11px] text-slate-500 dark:text-slate-400 font-semibold uppercase tracking-wide">Operating Expenses</span>
+              <p className="text-xl font-bold text-slate-800 dark:text-slate-300 mt-0.5">
                 {formatINR(baseline?.operating_expenses ?? 500000)}
               </p>
-              <span className="text-[10px] text-slate-500">25.0% expense ratio</span>
+              <span className="text-[10px] text-slate-500 dark:text-slate-400">25.0% expense ratio</span>
             </div>
 
-            <div className="bg-slate-800/80 rounded-xl p-3 border border-white/10 ring-1 ring-white/5">
-              <span className="text-[11px] text-slate-400 uppercase tracking-wide">Underwriting Profit</span>
-              <p className="text-xl font-bold text-emerald-400 mt-0.5">
+            <div className="bg-emerald-50/70 dark:bg-slate-800/80 rounded-xl p-3.5 border border-emerald-200 dark:border-white/10 ring-1 ring-emerald-500/10">
+              <span className="text-[11px] text-emerald-800 dark:text-slate-400 font-semibold uppercase tracking-wide">Underwriting Profit</span>
+              <p className="text-xl font-bold text-emerald-600 dark:text-emerald-400 mt-0.5">
                 {formatINR(baseline?.underwriting_profit ?? 300000)}
               </p>
-              <span className="text-[10px] text-emerald-400/80">15.0% margin</span>
+              <span className="text-[10px] text-emerald-700 dark:text-emerald-400/80 font-medium">15.0% margin</span>
             </div>
           </div>
         </div>
 
         {/* Current / Simulated: WITH INSURE */}
-        <div className="bg-gradient-to-br from-slate-900/90 via-slate-900/70 to-brand-950/40 border border-brand-500/30 rounded-2xl p-5 relative overflow-hidden shadow-xl shadow-brand-950/20">
-          <div className="absolute top-0 right-0 w-32 h-32 bg-brand-500/10 rounded-full blur-2xl pointer-events-none" />
+        <div className="bg-white dark:bg-slate-900 border-2 border-brand-500/40 dark:border-brand-500/40 rounded-2xl p-5 relative overflow-hidden shadow-xs">
           <div className="flex items-center justify-between mb-4 border-b border-brand-500/20 pb-3">
             <div>
-              <span className="text-[11px] font-bold uppercase tracking-wider text-brand-300 bg-brand-900/60 px-2 py-0.5 rounded border border-brand-500/30">
+              <span className="text-[11px] font-bold uppercase tracking-wider text-brand-700 dark:text-brand-300 bg-brand-50 dark:bg-brand-900/60 px-2 py-0.5 rounded border border-brand-200 dark:border-brand-500/30">
                 Simulated Strategy
               </span>
-              <h2 className="text-lg font-bold text-white mt-1 flex items-center gap-2">
+              <h2 className="text-lg font-bold text-slate-800 dark:text-white mt-1 flex items-center gap-2">
                 WITH INSURE — {simulation?.scenario_name ?? 'Expected Scenario'}
               </h2>
             </div>
             <div className="text-right">
-              <span className="text-xs font-semibold text-emerald-400 bg-emerald-500/10 border border-emerald-500/30 px-2 py-0.5 rounded">
+              <span className="text-xs font-semibold text-emerald-700 dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-500/10 border border-emerald-200 dark:border-emerald-500/30 px-2 py-0.5 rounded">
                 Profit: {formatINR(outcome?.underwriting_profit)}
               </span>
             </div>
           </div>
 
           <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
-            <div className="bg-slate-800/70 rounded-xl p-3 border border-white/5">
-              <span className="text-[11px] text-slate-400 uppercase tracking-wide">Customers</span>
+            <div className="bg-slate-50 dark:bg-slate-800/70 rounded-xl p-3.5 border border-slate-200/60 dark:border-white/5">
+              <span className="text-[11px] text-slate-500 dark:text-slate-400 font-semibold uppercase tracking-wide">Customers</span>
               <div className="flex items-baseline gap-1.5 mt-0.5">
-                <p className="text-xl font-bold text-white">
+                <p className="text-xl font-bold text-slate-900 dark:text-white">
                   {outcome?.customer_count.toLocaleString() ?? '1,300'}
                 </p>
                 {comparison && (
-                  <span className={`text-[10px] font-semibold ${comparison.customer_difference >= 0 ? 'text-emerald-400' : 'text-red-400'}`}>
+                  <span className={`text-[10px] font-semibold ${comparison.customer_difference >= 0 ? 'text-emerald-600 dark:text-emerald-400' : 'text-red-500 dark:text-red-400'}`}>
                     {comparison.customer_difference >= 0 ? '+' : ''}{comparison.customer_difference}
                   </span>
                 )}
               </div>
-              <span className="text-[10px] text-slate-500">
+              <span className="text-[10px] text-slate-500 dark:text-slate-400">
                 {comparison ? `${comparison.customer_growth_pct >= 0 ? '+' : ''}${comparison.customer_growth_pct}% growth` : 'Growth'}
               </span>
             </div>
 
-            <div className="bg-slate-800/70 rounded-xl p-3 border border-white/5">
-              <span className="text-[11px] text-slate-400 uppercase tracking-wide">Proposed Avg Premium</span>
+            <div className="bg-slate-50 dark:bg-slate-800/70 rounded-xl p-3.5 border border-slate-200/60 dark:border-white/5">
+              <span className="text-[11px] text-slate-500 dark:text-slate-400 font-semibold uppercase tracking-wide">Proposed Avg Premium</span>
               <div className="flex items-baseline gap-1.5 mt-0.5">
-                <p className="text-xl font-bold text-white">
+                <p className="text-xl font-bold text-slate-900 dark:text-white">
                   {formatINR(outcome?.avg_annual_premium ?? 1800)}
                 </p>
-                <span className="text-[10px] font-semibold text-emerald-400">
+                <span className="text-[10px] font-semibold text-emerald-600 dark:text-emerald-400">
                   -{discountPct}%
                 </span>
               </div>
-              <span className="text-[10px] text-slate-500">Competitive rate</span>
+              <span className="text-[10px] text-slate-500 dark:text-slate-400">Competitive rate</span>
             </div>
 
-            <div className="bg-slate-800/70 rounded-xl p-3 border border-white/5">
-              <span className="text-[11px] text-slate-400 uppercase tracking-wide">Premium Revenue</span>
-              <p className="text-xl font-bold text-brand-300 mt-0.5">
+            <div className="bg-slate-50 dark:bg-slate-800/70 rounded-xl p-3.5 border border-slate-200/60 dark:border-white/5">
+              <span className="text-[11px] text-slate-500 dark:text-slate-400 font-semibold uppercase tracking-wide">Premium Revenue</span>
+              <p className="text-xl font-bold text-brand-600 dark:text-brand-300 mt-0.5">
                 {formatINR(outcome?.premium_revenue ?? 2340000)}
               </p>
-              <span className="text-[10px] text-slate-500">
+              <span className="text-[10px] text-slate-500 dark:text-slate-400">
                 {outcome?.customer_count} × {formatINR(outcome?.avg_annual_premium)}
               </span>
             </div>
 
-            <div className="bg-slate-800/70 rounded-xl p-3 border border-white/5">
-              <span className="text-[11px] text-slate-400 uppercase tracking-wide">Claims Incurred</span>
-              <p className="text-xl font-bold text-amber-300 mt-0.5">
+            <div className="bg-slate-50 dark:bg-slate-800/70 rounded-xl p-3.5 border border-slate-200/60 dark:border-white/5">
+              <span className="text-[11px] text-slate-500 dark:text-slate-400 font-semibold uppercase tracking-wide">Claims Incurred</span>
+              <p className="text-xl font-bold text-amber-600 dark:text-amber-300 mt-0.5">
                 {formatINR(outcome?.claims_incurred ?? 1300000)}
               </p>
-              <span className="text-[10px] text-slate-500">
+              <span className="text-[10px] text-slate-500 dark:text-slate-400">
                 {outcome?.claims_ratio_pct}% claims ratio
               </span>
             </div>
 
-            <div className="bg-slate-800/70 rounded-xl p-3 border border-white/5">
-              <span className="text-[11px] text-slate-400 uppercase tracking-wide">Total Expenses</span>
-              <p className="text-xl font-bold text-slate-300 mt-0.5">
+            <div className="bg-slate-50 dark:bg-slate-800/70 rounded-xl p-3.5 border border-slate-200/60 dark:border-white/5">
+              <span className="text-[11px] text-slate-500 dark:text-slate-400 font-semibold uppercase tracking-wide">Total Expenses</span>
+              <p className="text-xl font-bold text-slate-800 dark:text-slate-300 mt-0.5">
                 {formatINR(outcome?.total_expenses ?? 550000)}
               </p>
-              <span className="text-[10px] text-slate-500">
+              <span className="text-[10px] text-slate-500 dark:text-slate-400">
                 Op + Plat + CAC
               </span>
             </div>
 
-            <div className="bg-emerald-950/40 rounded-xl p-3 border border-emerald-500/30 ring-1 ring-emerald-500/20">
-              <span className="text-[11px] text-emerald-300 uppercase tracking-wide font-semibold">Underwriting Profit</span>
+            <div className="bg-emerald-50 dark:bg-emerald-950/40 rounded-xl p-3.5 border border-emerald-200 dark:border-emerald-500/30 ring-1 ring-emerald-500/20">
+              <span className="text-[11px] text-emerald-800 dark:text-emerald-300 uppercase tracking-wide font-semibold">Underwriting Profit</span>
               <div className="flex items-baseline gap-1.5 mt-0.5">
-                <p className="text-xl font-bold text-emerald-400">
+                <p className="text-xl font-bold text-emerald-600 dark:text-emerald-400">
                   {formatINR(outcome?.underwriting_profit ?? 490000)}
                 </p>
               </div>
-              <span className="text-[10px] text-emerald-300/80 font-medium">
+              <span className="text-[10px] text-emerald-700 dark:text-emerald-300/80 font-medium">
                 {comparison && (
-                  <span className="text-emerald-300">
+                  <span>
                     +{formatINR(comparison.profit_difference)} (+{comparison.profit_growth_pct}%)
                   </span>
                 )}
@@ -537,16 +535,16 @@ export default function ProfitabilityPage() {
 
       {/* ── Profitability Safeguards & Audit Status ─────────────────────────── */}
       {safeguards && (
-        <div className="bg-slate-900/60 rounded-xl p-4 border border-white/10 flex flex-wrap items-center justify-between gap-3">
+        <div className="bg-white dark:bg-slate-900 rounded-2xl p-4 border border-slate-200/80 dark:border-slate-800 shadow-xs flex flex-wrap items-center justify-between gap-3">
           <div className="flex items-center gap-3">
-            <div className={`w-8 h-8 rounded-lg flex items-center justify-center ${safeguards.is_eligible ? 'bg-emerald-500/20 text-emerald-400' : 'bg-red-500/20 text-red-400'}`}>
+            <div className={`w-8 h-8 rounded-lg flex items-center justify-center ${safeguards.is_eligible ? 'bg-emerald-500/20 text-emerald-600 dark:text-emerald-400' : 'bg-red-500/20 text-red-600 dark:text-red-400'}`}>
               {safeguards.is_eligible ? <CheckCircle className="w-5 h-5" /> : <AlertTriangle className="w-5 h-5" />}
             </div>
             <div>
-              <p className="text-sm font-semibold text-white">
+              <p className="text-sm font-semibold text-slate-800 dark:text-white">
                 Underwriting Safeguards Status: {safeguards.is_eligible ? 'APPROVED & COMPLIANT' : 'CONSTRAINTS VIOLATED'}
               </p>
-              <p className="text-xs text-slate-400">
+              <p className="text-xs text-slate-500 dark:text-slate-400">
                 Regulatory Discount Cap: {safeguards.regulatory_discount_cap_pct}% (Current applied: {safeguards.evaluated_discount_pct}%) • {safeguards.claims_non_discrimination_guarantee}
               </p>
             </div>
@@ -558,8 +556,8 @@ export default function ProfitabilityPage() {
                 key={idx}
                 className={`text-xs px-2.5 py-1 rounded-md font-medium border ${
                   flag.type === 'violation'
-                    ? 'bg-red-950/60 text-red-300 border-red-500/40'
-                    : 'bg-amber-950/60 text-amber-300 border-amber-500/40'
+                    ? 'bg-red-50 dark:bg-red-950/60 text-red-700 dark:text-red-300 border-red-200 dark:border-red-500/40'
+                    : 'bg-amber-50 dark:bg-amber-950/60 text-amber-700 dark:text-amber-300 border-amber-200 dark:border-amber-500/40'
                 }`}
               >
                 {flag.message}
@@ -572,11 +570,11 @@ export default function ProfitabilityPage() {
       {/* ── Interactive Scenario Controls & Live Actuarial Model ───────────── */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         {/* Left 2 Columns: Controls Form */}
-        <div className="lg:col-span-2 bg-slate-900/80 border border-white/10 rounded-2xl p-6 space-y-6">
-          <div className="flex items-center justify-between border-b border-white/10 pb-4">
+        <div className="lg:col-span-2 bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 rounded-2xl p-6 space-y-6 shadow-xs">
+          <div className="flex items-center justify-between border-b border-slate-200/80 dark:border-white/10 pb-4">
             <div className="flex items-center gap-2">
-              <Sliders className="w-5 h-5 text-brand-400" />
-              <h3 className="text-base font-bold text-white">Scenario Assumptions & Model Controls</h3>
+              <Sliders className="w-5 h-5 text-brand-600 dark:text-brand-400" />
+              <h3 className="text-base font-bold text-slate-800 dark:text-white">Scenario Assumptions & Model Controls</h3>
             </div>
             <button
               onClick={() => runRecalculation()}
@@ -590,16 +588,16 @@ export default function ProfitabilityPage() {
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             {/* Customer Retention & Renewal */}
-            <div className="space-y-3 bg-slate-800/40 p-4 rounded-xl border border-white/5">
-              <span className="text-xs font-bold text-slate-300 uppercase tracking-wide flex items-center gap-1.5">
-                <Users className="w-3.5 h-3.5 text-brand-400" />
+            <div className="space-y-3 bg-slate-50 dark:bg-slate-800/40 p-4 rounded-xl border border-slate-200/60 dark:border-white/5">
+              <span className="text-xs font-bold text-slate-700 dark:text-slate-300 uppercase tracking-wide flex items-center gap-1.5">
+                <Users className="w-3.5 h-3.5 text-brand-600 dark:text-brand-400" />
                 Customer Base & Retention
               </span>
 
               <div>
                 <div className="flex justify-between text-xs mb-1">
-                  <span className="text-slate-400">Existing Customers:</span>
-                  <span className="text-white font-semibold">{existingCustomers.toLocaleString()}</span>
+                  <span className="text-slate-500 dark:text-slate-400">Existing Customers:</span>
+                  <span className="text-slate-900 dark:text-white font-semibold">{existingCustomers.toLocaleString()}</span>
                 </div>
                 <input
                   type="number"
@@ -612,14 +610,14 @@ export default function ProfitabilityPage() {
                     const retained = Math.round(val * (renewalRatePct / 100));
                     setCustomerCount(retained + newCustomersAcquired);
                   }}
-                  className="w-full bg-slate-900 border border-white/10 rounded-lg px-3 py-1.5 text-sm text-white focus:outline-none focus:border-brand-500"
+                  className="w-full bg-white dark:bg-slate-900 border border-slate-200 dark:border-white/10 rounded-lg px-3 py-1.5 text-sm text-slate-900 dark:text-white focus:outline-none focus:border-brand-500 shadow-xs"
                 />
               </div>
 
               <div>
                 <div className="flex justify-between text-xs mb-1">
-                  <span className="text-slate-400">Expected Renewal Rate:</span>
-                  <span className="text-brand-300 font-semibold">{renewalRatePct}%</span>
+                  <span className="text-slate-500 dark:text-slate-400">Expected Renewal Rate:</span>
+                  <span className="text-brand-600 dark:text-brand-300 font-semibold">{renewalRatePct}%</span>
                 </div>
                 <input
                   type="range"
@@ -634,15 +632,15 @@ export default function ProfitabilityPage() {
                   }}
                   className="w-full accent-brand-500"
                 />
-                <span className="text-[10px] text-slate-500">
+                <span className="text-[10px] text-slate-500 dark:text-slate-400">
                   Retained policyholders: {Math.round(existingCustomers * (renewalRatePct / 100)).toLocaleString()}
                 </span>
               </div>
 
               <div>
                 <div className="flex justify-between text-xs mb-1">
-                  <span className="text-slate-400">New Customers Acquired:</span>
-                  <span className="text-emerald-400 font-semibold">+{newCustomersAcquired.toLocaleString()}</span>
+                  <span className="text-slate-500 dark:text-slate-400">New Customers Acquired:</span>
+                  <span className="text-emerald-600 dark:text-emerald-400 font-semibold">+{newCustomersAcquired.toLocaleString()}</span>
                 </div>
                 <input
                   type="number"
@@ -655,27 +653,27 @@ export default function ProfitabilityPage() {
                     const retained = Math.round(existingCustomers * (renewalRatePct / 100));
                     setCustomerCount(retained + val);
                   }}
-                  className="w-full bg-slate-900 border border-white/10 rounded-lg px-3 py-1.5 text-sm text-white focus:outline-none focus:border-brand-500"
+                  className="w-full bg-white dark:bg-slate-900 border border-slate-200 dark:border-white/10 rounded-lg px-3 py-1.5 text-sm text-slate-900 dark:text-white focus:outline-none focus:border-brand-500 shadow-xs"
                 />
               </div>
 
-              <div className="pt-2 border-t border-white/5 flex justify-between items-center text-xs">
-                <span className="text-slate-300 font-medium">Resulting Customer Count:</span>
-                <span className="text-base font-bold text-white">{customerCount.toLocaleString()}</span>
+              <div className="pt-2 border-t border-slate-200/80 dark:border-white/5 flex justify-between items-center text-xs">
+                <span className="text-slate-600 dark:text-slate-300 font-medium">Resulting Customer Count:</span>
+                <span className="text-base font-bold text-slate-900 dark:text-white">{customerCount.toLocaleString()}</span>
               </div>
             </div>
 
             {/* Pricing & Premium */}
-            <div className="space-y-3 bg-slate-800/40 p-4 rounded-xl border border-white/5">
-              <span className="text-xs font-bold text-slate-300 uppercase tracking-wide flex items-center gap-1.5">
-                <DollarSign className="w-3.5 h-3.5 text-emerald-400" />
+            <div className="space-y-3 bg-slate-50 dark:bg-slate-800/40 p-4 rounded-xl border border-slate-200/60 dark:border-white/5">
+              <span className="text-xs font-bold text-slate-700 dark:text-slate-300 uppercase tracking-wide flex items-center gap-1.5">
+                <DollarSign className="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400" />
                 Premium Pricing Architecture
               </span>
 
               <div>
                 <div className="flex justify-between text-xs mb-1">
-                  <span className="text-slate-400">Approved Base Annual Premium:</span>
-                  <span className="text-white font-semibold">{formatINR(currentPremium)}</span>
+                  <span className="text-slate-500 dark:text-slate-400">Approved Base Annual Premium:</span>
+                  <span className="text-slate-900 dark:text-white font-semibold">{formatINR(currentPremium)}</span>
                 </div>
                 <input
                   type="number"
@@ -683,14 +681,14 @@ export default function ProfitabilityPage() {
                   step="100"
                   value={currentPremium}
                   onChange={e => setCurrentPremium(parseInt(e.target.value) || 2000)}
-                  className="w-full bg-slate-900 border border-white/10 rounded-lg px-3 py-1.5 text-sm text-white focus:outline-none focus:border-brand-500"
+                  className="w-full bg-white dark:bg-slate-900 border border-slate-200 dark:border-white/10 rounded-lg px-3 py-1.5 text-sm text-slate-900 dark:text-white focus:outline-none focus:border-brand-500 shadow-xs"
                 />
               </div>
 
               <div>
                 <div className="flex justify-between text-xs mb-1">
-                  <span className="text-slate-400">Proposed Average Annual Premium:</span>
-                  <span className="text-brand-300 font-semibold">{formatINR(proposedPremium)}</span>
+                  <span className="text-slate-500 dark:text-slate-400">Proposed Average Annual Premium:</span>
+                  <span className="text-brand-600 dark:text-brand-300 font-semibold">{formatINR(proposedPremium)}</span>
                 </div>
                 <input
                   type="number"
@@ -698,17 +696,17 @@ export default function ProfitabilityPage() {
                   step="50"
                   value={proposedPremium}
                   onChange={e => setProposedPremium(parseInt(e.target.value) || 1800)}
-                  className="w-full bg-slate-900 border border-white/10 rounded-lg px-3 py-1.5 text-sm text-white focus:outline-none focus:border-brand-500"
+                  className="w-full bg-white dark:bg-slate-900 border border-slate-200 dark:border-white/10 rounded-lg px-3 py-1.5 text-sm text-slate-900 dark:text-white focus:outline-none focus:border-brand-500 shadow-xs"
                 />
-                <span className="text-[10px] text-slate-500">
+                <span className="text-[10px] text-slate-500 dark:text-slate-400">
                   Adjustment: {proposedPremium < currentPremium ? `-${Math.round(((currentPremium - proposedPremium) / currentPremium) * 100)}% discount` : proposedPremium === currentPremium ? '0% standard' : `+${Math.round(((proposedPremium - currentPremium) / currentPremium) * 100)}% surcharge`}
                 </span>
               </div>
 
               <div>
                 <div className="flex justify-between text-xs mb-1">
-                  <span className="text-slate-400">Target Underwriting Profit:</span>
-                  <span className="text-emerald-400 font-semibold">{formatINR(targetProfit)}</span>
+                  <span className="text-slate-500 dark:text-slate-400">Target Underwriting Profit:</span>
+                  <span className="text-emerald-600 dark:text-emerald-400 font-semibold">{formatINR(targetProfit)}</span>
                 </div>
                 <input
                   type="number"
@@ -716,27 +714,27 @@ export default function ProfitabilityPage() {
                   step="50000"
                   value={targetProfit}
                   onChange={e => setTargetProfit(parseInt(e.target.value) || 400000)}
-                  className="w-full bg-slate-900 border border-white/10 rounded-lg px-3 py-1.5 text-sm text-white focus:outline-none focus:border-brand-500"
+                  className="w-full bg-white dark:bg-slate-900 border border-slate-200 dark:border-white/10 rounded-lg px-3 py-1.5 text-sm text-slate-900 dark:text-white focus:outline-none focus:border-brand-500 shadow-xs"
                 />
               </div>
 
-              <div className="pt-2 border-t border-white/5 flex justify-between items-center text-xs">
-                <span className="text-slate-300 font-medium">Earned Revenue Formula:</span>
-                <span className="text-xs font-mono text-slate-400">Count × Avg Premium</span>
+              <div className="pt-2 border-t border-slate-200/80 dark:border-white/5 flex justify-between items-center text-xs">
+                <span className="text-slate-600 dark:text-slate-300 font-medium">Earned Revenue Formula:</span>
+                <span className="text-xs font-mono text-slate-500 dark:text-slate-400">Count × Avg Premium</span>
               </div>
             </div>
 
             {/* Claims Incurred */}
-            <div className="space-y-3 bg-slate-800/40 p-4 rounded-xl border border-white/5">
-              <span className="text-xs font-bold text-slate-300 uppercase tracking-wide flex items-center gap-1.5">
-                <ShieldAlert className="w-3.5 h-3.5 text-amber-400" />
+            <div className="space-y-3 bg-slate-50 dark:bg-slate-800/40 p-4 rounded-xl border border-slate-200/60 dark:border-white/5">
+              <span className="text-xs font-bold text-slate-700 dark:text-slate-300 uppercase tracking-wide flex items-center gap-1.5">
+                <ShieldAlert className="w-3.5 h-3.5 text-amber-600 dark:text-amber-400" />
                 Claims Costs & Incurred Losses
               </span>
 
               <div>
                 <div className="flex justify-between text-xs mb-1">
-                  <span className="text-slate-400">Total Claims Incurred (Portfolio):</span>
-                  <span className="text-amber-300 font-semibold">{formatINR(claimsIncurred)}</span>
+                  <span className="text-slate-500 dark:text-slate-400">Total Claims Incurred (Portfolio):</span>
+                  <span className="text-amber-600 dark:text-amber-300 font-semibold">{formatINR(claimsIncurred)}</span>
                 </div>
                 <input
                   type="number"
@@ -744,60 +742,60 @@ export default function ProfitabilityPage() {
                   step="50000"
                   value={claimsIncurred}
                   onChange={e => setClaimsIncurred(parseInt(e.target.value) || 0)}
-                  className="w-full bg-slate-900 border border-white/10 rounded-lg px-3 py-1.5 text-sm text-white focus:outline-none focus:border-brand-500"
+                  className="w-full bg-white dark:bg-slate-900 border border-slate-200 dark:border-white/10 rounded-lg px-3 py-1.5 text-sm text-slate-900 dark:text-white focus:outline-none focus:border-brand-500 shadow-xs"
                 />
-                <span className="text-[10px] text-slate-500">
+                <span className="text-[10px] text-slate-500 dark:text-slate-400">
                   Includes both paid claims and outstanding claim reserves.
                 </span>
               </div>
 
-              <div className="pt-2 border-t border-white/5 text-xs text-slate-400">
-                <p className="flex items-center gap-1 text-[11px] text-emerald-400">
+              <div className="pt-2 border-t border-slate-200/80 dark:border-white/5 text-xs text-slate-500 dark:text-slate-400">
+                <p className="flex items-center gap-1 text-[11px] text-emerald-600 dark:text-emerald-400">
                   <CheckCircle className="w-3.5 h-3.5" />
                   Legitimate claims protection guaranteed.
                 </p>
-                <p className="text-[10px] text-slate-500 mt-0.5">
+                <p className="text-[10px] text-slate-500 dark:text-slate-400 mt-0.5">
                   Claims are never delayed or reduced based on telematics scores.
                 </p>
               </div>
             </div>
 
             {/* Expenses Breakdown */}
-            <div className="space-y-3 bg-slate-800/40 p-4 rounded-xl border border-white/5">
-              <span className="text-xs font-bold text-slate-300 uppercase tracking-wide flex items-center gap-1.5">
-                <BarChart3 className="w-3.5 h-3.5 text-blue-400" />
+            <div className="space-y-3 bg-slate-50 dark:bg-slate-800/40 p-4 rounded-xl border border-slate-200/60 dark:border-white/5">
+              <span className="text-xs font-bold text-slate-700 dark:text-slate-300 uppercase tracking-wide flex items-center gap-1.5">
+                <BarChart3 className="w-3.5 h-3.5 text-blue-600 dark:text-blue-400" />
                 Expenses & Platform Costs
               </span>
 
               <div className="grid grid-cols-2 gap-2">
                 <div>
-                  <span className="text-[11px] text-slate-400 block mb-1">Operating Exp:</span>
+                  <span className="text-[11px] text-slate-500 dark:text-slate-400 block mb-1">Operating Exp:</span>
                   <input
                     type="number"
                     min="0"
                     step="25000"
                     value={operatingExpenses}
                     onChange={e => setOperatingExpenses(parseInt(e.target.value) || 0)}
-                    className="w-full bg-slate-900 border border-white/10 rounded-lg px-2.5 py-1.5 text-xs text-white"
+                    className="w-full bg-white dark:bg-slate-900 border border-slate-200 dark:border-white/10 rounded-lg px-2.5 py-1.5 text-xs text-slate-900 dark:text-white shadow-xs"
                   />
                 </div>
                 <div>
-                  <span className="text-[11px] text-slate-400 block mb-1">Platform Cost:</span>
+                  <span className="text-[11px] text-slate-500 dark:text-slate-400 block mb-1">Platform Cost:</span>
                   <input
                     type="number"
                     min="0"
                     step="10000"
                     value={platformCosts}
                     onChange={e => setPlatformCosts(parseInt(e.target.value) || 0)}
-                    className="w-full bg-slate-900 border border-white/10 rounded-lg px-2.5 py-1.5 text-xs text-white"
+                    className="w-full bg-white dark:bg-slate-900 border border-slate-200 dark:border-white/10 rounded-lg px-2.5 py-1.5 text-xs text-slate-900 dark:text-white shadow-xs"
                   />
                 </div>
               </div>
 
               <div>
                 <div className="flex justify-between text-xs mb-1">
-                  <span className="text-slate-400">CAC per Customer:</span>
-                  <span className="text-slate-300 font-semibold">{formatINR(cacPerCustomer)}</span>
+                  <span className="text-slate-500 dark:text-slate-400">CAC per Customer:</span>
+                  <span className="text-slate-800 dark:text-slate-300 font-semibold">{formatINR(cacPerCustomer)}</span>
                 </div>
                 <input
                   type="number"
@@ -805,13 +803,13 @@ export default function ProfitabilityPage() {
                   step="50"
                   value={cacPerCustomer}
                   onChange={e => setCacPerCustomer(parseInt(e.target.value) || 0)}
-                  className="w-full bg-slate-900 border border-white/10 rounded-lg px-3 py-1.5 text-sm text-white focus:outline-none focus:border-brand-500"
+                  className="w-full bg-white dark:bg-slate-900 border border-slate-200 dark:border-white/10 rounded-lg px-3 py-1.5 text-sm text-slate-900 dark:text-white focus:outline-none focus:border-brand-500 shadow-xs"
                 />
               </div>
 
-              <div className="pt-2 border-t border-white/5 flex justify-between items-center text-xs">
-                <span className="text-slate-300 font-medium">Total Expenses:</span>
-                <span className="text-sm font-bold text-slate-200">
+              <div className="pt-2 border-t border-slate-200/80 dark:border-white/5 flex justify-between items-center text-xs">
+                <span className="text-slate-600 dark:text-slate-300 font-medium">Total Expenses:</span>
+                <span className="text-sm font-bold text-slate-800 dark:text-slate-200">
                   {formatINR(operatingExpenses + platformCosts + (newCustomersAcquired * cacPerCustomer))}
                 </span>
               </div>
@@ -820,23 +818,23 @@ export default function ProfitabilityPage() {
         </div>
 
         {/* Right 1 Column: Key Metrics & Break-Even Ratios */}
-        <div className="bg-slate-900/80 border border-white/10 rounded-2xl p-6 space-y-5 flex flex-col justify-between">
+        <div className="bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 rounded-2xl p-6 space-y-5 flex flex-col justify-between shadow-xs">
           <div>
-            <div className="flex items-center gap-2 border-b border-white/10 pb-3 mb-4">
-              <Scale className="w-5 h-5 text-emerald-400" />
-              <h3 className="text-base font-bold text-white">Actuarial Financial Ratios</h3>
+            <div className="flex items-center gap-2 border-b border-slate-200/80 dark:border-white/10 pb-3 mb-4">
+              <Scale className="w-5 h-5 text-emerald-600 dark:text-emerald-400" />
+              <h3 className="text-base font-bold text-slate-800 dark:text-white">Actuarial Financial Ratios</h3>
             </div>
 
             <div className="space-y-4">
               {/* Profit Margin */}
-              <div className="bg-slate-800/50 p-3.5 rounded-xl border border-white/5">
+              <div className="bg-slate-50 dark:bg-slate-800/50 p-3.5 rounded-xl border border-slate-200/60 dark:border-white/5">
                 <div className="flex justify-between items-center">
-                  <span className="text-xs text-slate-400">Underwriting Profit Margin</span>
-                  <span className={`text-base font-bold ${isProfitable ? 'text-emerald-400' : 'text-red-400'}`}>
+                  <span className="text-xs text-slate-500 dark:text-slate-400">Underwriting Profit Margin</span>
+                  <span className={`text-base font-bold ${isProfitable ? 'text-emerald-600 dark:text-emerald-400' : 'text-red-500 dark:text-red-400'}`}>
                     {outcome?.profit_margin_pct}%
                   </span>
                 </div>
-                <div className="w-full bg-slate-700 h-2 rounded-full overflow-hidden mt-2">
+                <div className="w-full bg-slate-200 dark:bg-slate-700 h-2 rounded-full overflow-hidden mt-2">
                   <div
                     className={`h-full ${isProfitable ? 'bg-emerald-500' : 'bg-red-500'}`}
                     style={{ width: `${Math.min(100, Math.max(0, (outcome?.profit_margin_pct ?? 0) * 3))}%` }}
@@ -845,18 +843,18 @@ export default function ProfitabilityPage() {
               </div>
 
               {/* Combined Ratio */}
-              <div className="bg-slate-800/50 p-3.5 rounded-xl border border-white/5">
+              <div className="bg-slate-50 dark:bg-slate-800/50 p-3.5 rounded-xl border border-slate-200/60 dark:border-white/5">
                 <div className="flex justify-between items-center">
-                  <span className="text-xs text-slate-400">Combined Ratio (Claims + Exp)</span>
-                  <span className={`text-base font-bold ${(outcome?.combined_ratio_pct ?? 0) <= 100 ? 'text-emerald-400' : 'text-amber-400'}`}>
+                  <span className="text-xs text-slate-500 dark:text-slate-400">Combined Ratio (Claims + Exp)</span>
+                  <span className={`text-base font-bold ${(outcome?.combined_ratio_pct ?? 0) <= 100 ? 'text-emerald-600 dark:text-emerald-400' : 'text-amber-600 dark:text-amber-400'}`}>
                     {outcome?.combined_ratio_pct}%
                   </span>
                 </div>
-                <div className="flex justify-between text-[10px] text-slate-500 mt-1">
+                <div className="flex justify-between text-[10px] text-slate-500 dark:text-slate-400 mt-1">
                   <span>Claims Ratio: {outcome?.claims_ratio_pct}%</span>
                   <span>Expense Ratio: {outcome?.expense_ratio_pct}%</span>
                 </div>
-                <p className="text-[10px] text-slate-400 mt-1">
+                <p className="text-[10px] text-slate-500 dark:text-slate-400 mt-1">
                   {(outcome?.combined_ratio_pct ?? 0) < 100
                     ? '✓ Combined ratio below 100% generates positive underwriting margin.'
                     : '⚠ Combined ratio above 100% indicates underwriting loss.'}
@@ -864,29 +862,29 @@ export default function ProfitabilityPage() {
               </div>
 
               {/* Break-even Metrics */}
-              <div className="bg-slate-800/50 p-3.5 rounded-xl border border-white/5 space-y-2">
-                <span className="text-xs font-semibold text-slate-300 block">Break-Even Analysis</span>
+              <div className="bg-slate-50 dark:bg-slate-800/50 p-3.5 rounded-xl border border-slate-200/60 dark:border-white/5 space-y-2">
+                <span className="text-xs font-semibold text-slate-700 dark:text-slate-300 block">Break-Even Analysis</span>
                 <div className="flex justify-between text-xs">
-                  <span className="text-slate-400">Break-even Policyholders:</span>
-                  <span className="font-bold text-white">{outcome?.break_even_customers.toLocaleString()} customers</span>
+                  <span className="text-slate-500 dark:text-slate-400">Break-even Policyholders:</span>
+                  <span className="font-bold text-slate-900 dark:text-white">{outcome?.break_even_customers.toLocaleString()} customers</span>
                 </div>
                 <div className="flex justify-between text-xs">
-                  <span className="text-slate-400">Break-even Avg Premium:</span>
-                  <span className="font-bold text-white">{formatINR(outcome?.break_even_premium)}</span>
+                  <span className="text-slate-500 dark:text-slate-400">Break-even Avg Premium:</span>
+                  <span className="font-bold text-slate-900 dark:text-white">{formatINR(outcome?.break_even_premium)}</span>
                 </div>
-                <p className="text-[10px] text-slate-500">
+                <p className="text-[10px] text-slate-500 dark:text-slate-400">
                   Minimum customer volume and premium needed to cover total claims incurred and expenses.
                 </p>
               </div>
             </div>
           </div>
 
-          <div className="p-3 bg-brand-950/40 border border-brand-500/20 rounded-xl">
-            <span className="text-[11px] font-semibold text-brand-300 flex items-center gap-1 mb-1">
+          <div className="p-3.5 bg-brand-50/60 dark:bg-brand-950/40 border border-brand-200/70 dark:border-brand-500/20 rounded-xl">
+            <span className="text-[11px] font-semibold text-brand-700 dark:text-brand-300 flex items-center gap-1 mb-1">
               <Info className="w-3.5 h-3.5" />
               Transparent Actuarial Disclosure
             </span>
-            <p className="text-[10px] text-slate-400 leading-relaxed">
+            <p className="text-[10px] text-slate-600 dark:text-slate-400 leading-relaxed">
               Discounts and customer volume do not automatically create profit. Sustainable underwriting requires verified driver risk separation and strict loss ratio controls.
             </p>
           </div>
@@ -895,22 +893,22 @@ export default function ProfitabilityPage() {
 
       {/* ── Pricing Optimizer Modal / Ranking View ──────────────────────────── */}
       {showOptimizerResults && optimization && (
-        <div className="bg-slate-900 border border-purple-500/40 rounded-2xl p-6 shadow-2xl space-y-5 animate-fadeIn">
-          <div className="flex items-center justify-between border-b border-white/10 pb-4">
+        <div className="bg-white dark:bg-slate-900 border border-purple-300 dark:border-purple-500/40 rounded-2xl p-6 shadow-xl space-y-5 animate-fadeIn">
+          <div className="flex items-center justify-between border-b border-slate-200 dark:border-white/10 pb-4">
             <div>
-              <span className="text-xs font-bold uppercase tracking-wider text-purple-400 bg-purple-950/80 px-2.5 py-0.5 rounded border border-purple-500/30">
+              <span className="text-xs font-bold uppercase tracking-wider text-purple-700 dark:text-purple-400 bg-purple-50 dark:bg-purple-950/80 px-2.5 py-0.5 rounded border border-purple-200 dark:border-purple-500/30">
                 Profitability-Aware Pricing Optimizer
               </span>
-              <h3 className="text-lg font-bold text-white mt-1">
+              <h3 className="text-lg font-bold text-slate-800 dark:text-white mt-1">
                 Strategy Optimization Ranking ({optimization.evaluated_count} Scenarios Evaluated)
               </h3>
-              <p className="text-xs text-slate-400">
+              <p className="text-xs text-slate-500 dark:text-slate-400">
                 Criteria: {optimization.optimizer_criteria}
               </p>
             </div>
             <button
               onClick={() => setShowOptimizerResults(false)}
-              className="text-xs text-slate-400 hover:text-white px-3 py-1 rounded bg-slate-800"
+              className="text-xs text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white px-3 py-1 rounded bg-slate-100 dark:bg-slate-800"
             >
               Close Optimizer
             </button>
@@ -918,20 +916,20 @@ export default function ProfitabilityPage() {
 
           {/* Selected Strategy Banner */}
           {optimization.selected_strategy ? (
-            <div className="p-4 rounded-xl bg-gradient-to-r from-emerald-950/80 to-slate-900 border border-emerald-500/40 flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+            <div className="p-4 rounded-xl bg-gradient-to-r from-emerald-50 to-white dark:from-emerald-950/80 dark:to-slate-900 border border-emerald-300 dark:border-emerald-500/40 flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
               <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-xl bg-emerald-500/20 text-emerald-400 flex items-center justify-center flex-shrink-0">
+                <div className="w-10 h-10 rounded-xl bg-emerald-500/20 text-emerald-600 dark:text-emerald-400 flex items-center justify-center flex-shrink-0">
                   <Award className="w-6 h-6" />
                 </div>
                 <div>
-                  <span className="text-[11px] font-semibold uppercase tracking-wider text-emerald-400">
+                  <span className="text-[11px] font-semibold uppercase tracking-wider text-emerald-700 dark:text-emerald-400">
                     Highest Underwriting Profit Strategy Selected
                   </span>
-                  <h4 className="text-base font-bold text-white">
+                  <h4 className="text-base font-bold text-slate-800 dark:text-white">
                     {optimization.selected_strategy.scenario_name}
                   </h4>
-                  <p className="text-xs text-slate-300">
-                    Expected Underwriting Profit: <strong className="text-emerald-400">{formatINR(optimization.selected_strategy.outcome.underwriting_profit)}</strong> ({optimization.selected_strategy.outcome.profit_margin_pct}% margin) • {optimization.selected_strategy.outcome.customer_count.toLocaleString()} customers at {formatINR(optimization.selected_strategy.outcome.avg_annual_premium)}
+                  <p className="text-xs text-slate-600 dark:text-slate-300">
+                    Expected Underwriting Profit: <strong className="text-emerald-600 dark:text-emerald-400">{formatINR(optimization.selected_strategy.outcome.underwriting_profit)}</strong> ({optimization.selected_strategy.outcome.profit_margin_pct}% margin) • {optimization.selected_strategy.outcome.customer_count.toLocaleString()} customers at {formatINR(optimization.selected_strategy.outcome.avg_annual_premium)}
                   </p>
                 </div>
               </div>
@@ -960,15 +958,15 @@ export default function ProfitabilityPage() {
               </button>
             </div>
           ) : (
-            <div className="p-4 rounded-xl bg-red-950/60 border border-red-500/40 text-red-300 text-sm">
+            <div className="p-4 rounded-xl bg-red-50 dark:bg-red-950/60 border border-red-300 dark:border-red-500/40 text-red-700 dark:text-red-300 text-sm">
               No evaluated candidate strategy satisfied all profitability and regulatory safeguards.
             </div>
           )}
 
           {/* Detailed Ranking Table */}
           <div className="overflow-x-auto">
-            <table className="w-full text-left text-xs text-slate-300">
-              <thead className="bg-slate-800 text-slate-400 uppercase text-[10px] tracking-wider">
+            <table className="w-full text-left text-xs text-slate-700 dark:text-slate-300">
+              <thead className="bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 uppercase text-[10px] tracking-wider">
                 <tr>
                   <th className="py-2.5 px-3">Strategy</th>
                   <th className="py-2.5 px-3">Premium</th>
@@ -981,32 +979,32 @@ export default function ProfitabilityPage() {
                   <th className="py-2.5 px-3">Status</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-white/5">
+              <tbody className="divide-y divide-slate-200/80 dark:divide-white/5">
                 {optimization.strategies.map((strat, idx) => {
                   const isWinning = optimization.selected_strategy?.scenario_name === strat.scenario_name;
                   return (
                     <tr
                       key={idx}
-                      className={isWinning ? 'bg-emerald-950/20 font-semibold' : 'hover:bg-slate-800/40'}
+                      className={isWinning ? 'bg-emerald-50/80 dark:bg-emerald-950/20 font-semibold' : 'hover:bg-slate-50 dark:hover:bg-slate-800/40'}
                     >
                       <td className="py-3 px-3 flex items-center gap-2">
-                        {isWinning && <Award className="w-3.5 h-3.5 text-emerald-400" />}
-                        <span className="text-white">{strat.scenario_name}</span>
+                        {isWinning && <Award className="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400" />}
+                        <span className="text-slate-900 dark:text-white">{strat.scenario_name}</span>
                       </td>
-                      <td className="py-3 px-3 text-white">{formatINR(strat.outcome.avg_annual_premium)}</td>
+                      <td className="py-3 px-3 text-slate-900 dark:text-white">{formatINR(strat.outcome.avg_annual_premium)}</td>
                       <td className="py-3 px-3">{strat.outcome.customer_count.toLocaleString()}</td>
-                      <td className="py-3 px-3 text-brand-300">{formatINR(strat.outcome.premium_revenue)}</td>
-                      <td className="py-3 px-3 text-amber-300">{formatINR(strat.outcome.claims_incurred)}</td>
-                      <td className="py-3 px-3 text-slate-400">{formatINR(strat.outcome.total_expenses)}</td>
-                      <td className="py-3 px-3 font-bold text-emerald-400">{formatINR(strat.outcome.underwriting_profit)}</td>
+                      <td className="py-3 px-3 text-brand-600 dark:text-brand-300 font-medium">{formatINR(strat.outcome.premium_revenue)}</td>
+                      <td className="py-3 px-3 text-amber-600 dark:text-amber-300 font-medium">{formatINR(strat.outcome.claims_incurred)}</td>
+                      <td className="py-3 px-3 text-slate-600 dark:text-slate-400">{formatINR(strat.outcome.total_expenses)}</td>
+                      <td className="py-3 px-3 font-bold text-emerald-600 dark:text-emerald-400">{formatINR(strat.outcome.underwriting_profit)}</td>
                       <td className="py-3 px-3">{strat.outcome.profit_margin_pct}%</td>
                       <td className="py-3 px-3">
                         {strat.safeguards.is_eligible ? (
-                          <span className="px-2 py-0.5 rounded text-[10px] font-semibold bg-emerald-500/20 text-emerald-400 border border-emerald-500/30">
+                          <span className="px-2 py-0.5 rounded text-[10px] font-semibold bg-emerald-500/20 text-emerald-700 dark:text-emerald-400 border border-emerald-500/30">
                             Approved
                           </span>
                         ) : (
-                          <span className="px-2 py-0.5 rounded text-[10px] font-semibold bg-red-500/20 text-red-400 border border-red-500/30">
+                          <span className="px-2 py-0.5 rounded text-[10px] font-semibold bg-red-500/20 text-red-700 dark:text-red-400 border border-red-500/30">
                             Disqualified
                           </span>
                         )}
