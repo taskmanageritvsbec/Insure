@@ -1,36 +1,14 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
-  "services": {
-    "insure-backend": {
-      "root": "backend",
-      "framework": "express",
-      "buildCommand": "npm install && npm run build"
-    },
-    "frontend": {
-      "root": "frontend",
-      "framework": "vite",
-      "buildCommand": "npm install && npm run build",
-      "outputDirectory": "dist"
-    }
-  },
+  "framework": "vite",
+  "buildCommand": "npm --prefix frontend run build",
+  "outputDirectory": "frontend/dist",
+  "cleanUrls": true,
+  "trailingSlash": false,
   "rewrites": [
     {
-      "source": "/health",
-      "destination": {
-        "service": "insure-backend"
-      }
-    },
-    {
-      "source": "/api/(.*)",
-      "destination": {
-        "service": "insure-backend"
-      }
-    },
-    {
       "source": "/(.*)",
-      "destination": {
-        "service": "frontend"
-      }
+      "destination": "/index.html"
     }
   ],
   "headers": [
