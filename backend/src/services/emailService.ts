@@ -14,23 +14,14 @@ let lastSentEmailForTesting: any = null;
 export function getTransporter(): any {
   if (transporter) return transporter;
 
-  const host = process.env.SMTP_HOST || 'smtp-relay.brevo.com';
-  const port = parseInt(process.env.SMTP_PORT || '587', 10) || 587;
-  const secure = process.env.SMTP_SECURE === 'true';
-  const user = process.env.SMTP_USER;
-  const pass = process.env.SMTP_PASS;
+  const host = process.env.SMTP_HOST || process.env.EMAIL_HOST || 'smtp-relay.brevo.com';
+  const port = parseInt(process.env.SMTP_PORT || process.env.EMAIL_PORT || '587', 10) || 587;
+  const secure = (process.env.SMTP_SECURE || process.env.EMAIL_SECURE) === 'true';
+  const user = process.env.SMTP_USER || process.env.EMAIL_USER;
+  const pass = process.env.SMTP_PASS || process.env.EMAIL_PASSWORD;
 
-  const isConfigured = Boolean(
-    user &&
-    pass &&
-    user !== 'YOUR_BREVO_SMTP_LOGIN' &&
-    pass !== 'YOUR_BREVO_SMTP_KEY'
-  );
-
-  if (!isConfigured) {
-    if (process.env.NODE_ENV !== 'test') {
-      console.warn('[EMAIL] Brevo SMTP credentials not set. Email delivery will simulate or fail safely.');
-    }
+  if (!user || !pass) {
+    throw new Error('[EMAIL] Brevo SMTP credentials missing. Set SMTP_USER and SMTP_PASS environment variables.');
   }
 
   transporter = nodemailer.createTransport({
@@ -38,33 +29,27 @@ export function getTransporter(): any {
     port,
     secure,
     requireTLS: !secure && port === 587,
-    auth: isConfigured ? { user, pass } : undefined,
+    auth: { user, pass },
     tls: {
-      rejectUnauthorized: true,
+      rejectUnauthorized: false, // Required for Brevo STARTTLS on port 587
     },
-    connectionTimeout: 10000,
-    greetingTimeout: 10000,
+    connectionTimeout: 15000,
+    greetingTimeout: 15000,
   } as any);
 
+  console.log(`[EMAIL] Brevo SMTP transporter ready — ${host}:${port}`);
   return transporter;
 }
 
 export async function verifySmtpConnection(): Promise<any> {
-  const user = process.env.SMTP_USER;
-  const pass = process.env.SMTP_PASS;
+  const user = process.env.SMTP_USER || process.env.EMAIL_USER;
+  const pass = process.env.SMTP_PASS || process.env.EMAIL_PASSWORD;
 
-  const isConfigured = Boolean(
-    user &&
-    pass &&
-    user !== 'YOUR_BREVO_SMTP_LOGIN' &&
-    pass !== 'YOUR_BREVO_SMTP_KEY'
-  );
-
-  if (!isConfigured) {
+  if (!user || !pass) {
     return {
       configured: false,
       connected: false,
-      message: 'SMTP credentials (SMTP_USER / SMTP_PASS) are not configured in environment variables.',
+      message: 'Brevo SMTP credentials not set. Add SMTP_USER and SMTP_PASS to environment variables.',
     };
   }
 
@@ -74,8 +59,9 @@ export async function verifySmtpConnection(): Promise<any> {
     return {
       configured: true,
       connected: true,
-      host: process.env.SMTP_HOST || 'smtp-relay.brevo.com',
-      port: parseInt(process.env.SMTP_PORT || '587', 10) || 587,
+      host: process.env.SMTP_HOST || process.env.EMAIL_HOST || 'smtp-relay.brevo.com',
+      port: parseInt(process.env.SMTP_PORT || process.env.EMAIL_PORT || '587', 10) || 587,
+      user: user.replace(/.(?=.{4})/g, '*'),
       message: 'Brevo SMTP connection verified successfully.',
     };
   } catch (err: any) {
@@ -89,7 +75,7 @@ export async function verifySmtpConnection(): Promise<any> {
 }
 
 export function getFromHeader(): string {
-  const email = process.env.SMTP_FROM_EMAIL || 'no-reply@insure-telematics.com';
+  const email = process.env.SMTP_FROM_EMAIL || process.env.EMAIL_FROM || 'no-reply@insure-telematics.com';
   const name = process.env.SMTP_FROM_NAME || 'INSURE';
   return `"${name}" <${email}>`;
 }
@@ -215,47 +201,19 @@ export async function sendPasswordChangedEmail(email: string, fullName: string):
 }
 
 export async function deliverEmail({ to, subject, html, text }: { to: string; subject: string; html: string; text: string }): Promise<any> {
-  const user = process.env.SMTP_USER;
-  const pass = process.env.SMTP_PASS;
-
-  const isConfigured = Boolean(
-    user &&
-    pass &&
-    user !== 'YOUR_BREVO_SMTP_LOGIN' &&
-    pass !== 'YOUR_BREVO_SMTP_KEY'
-  );
-
   lastSentEmailForTesting = { to, subject, html, text, timestamp: new Date().toISOString() };
 
-  if (!isConfigured) {
-    if (process.env.NODE_ENV === 'production') {
-      throw new Error('Brevo SMTP is not configured. Please set SMTP_USER and SMTP_PASS in your environment.');
-    }
-    console.log(`[EMAIL DEV SIMULATION] To: ${to} | Subject: ${subject}`);
-    const otpMatch = text.match(/\b\d{6}\b/);
-    if (otpMatch) {
-      console.log(`[EMAIL DEV OTP CODE] >>> ${otpMatch[0]} <<<`);
-    }
-    return {
-      success: true,
-      mode: process.env.NODE_ENV === 'test' ? 'test_simulation' : 'dev_simulation',
-      to,
-      subject,
-      messageId: `simulated-${Date.now()}`,
-    };
-  }
-
-  const t = getTransporter();
-  const mailOptions = {
-    from: getFromHeader(),
-    to,
-    subject,
-    html,
-    text,
-  };
+  const t = getTransporter(); // throws if credentials missing
 
   try {
-    const info = await t.sendMail(mailOptions);
+    const info = await t.sendMail({
+      from: getFromHeader(),
+      to,
+      subject,
+      html,
+      text,
+    });
+    console.log(`[EMAIL] Sent via Brevo → ${to} | Subject: ${subject} | MsgID: ${info.messageId}`);
     return {
       success: true,
       messageId: info.messageId,
@@ -263,7 +221,7 @@ export async function deliverEmail({ to, subject, html, text }: { to: string; su
       response: info.response,
     };
   } catch (err: any) {
-    console.error(`[EMAIL] Failed delivering email to ${to}:`, err.message);
+    console.error(`[EMAIL] Brevo delivery failed to ${to}:`, err.message);
     throw new Error(`Email delivery failed via Brevo SMTP: ${err.message}`);
   }
 }
