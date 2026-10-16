@@ -29,6 +29,7 @@ router.get('/portfolio', async (req: any, res: Response, next: NextFunction) => 
     const allAssessments = assessments || [];
     const allDisputes = disputes || [];
 
+    // Only count actual customers (not admin / compliance accounts)
     const totalCustomers = allUsers.filter((u: any) => u.role === 'customer').length;
     const verifiedCustomers = allUsers.filter((u: any) => u.role === 'customer' && u.is_email_verified).length;
 
@@ -36,35 +37,62 @@ router.get('/portfolio', async (req: any, res: Response, next: NextFunction) => 
     const totalPremiumVolume = allQuotes.reduce((acc: number, q: any) => acc + (parseFloat(q.illustrative_estimate) || 0), 0);
     const avgPremium = totalQuotes > 0 ? Math.round(totalPremiumVolume / totalQuotes) : 0;
 
+    // ── Actuarial Ratios ─────────────────────────────────────────────────────
+    // Earned premium: sum of actual quotes if present, else verified customers × base premium
+    const basePremium = parseFloat(process.env.BASE_PREMIUM || '2000');
+    const earnedPremium = totalPremiumVolume > 0
+      ? totalPremiumVolume
+      : Math.max(verifiedCustomers, 1) * basePremium;
+
     const { data: accidents } = await db.from('accident_records').select('*');
     const { data: finScenarios } = await db.from('financial_scenarios').select('*').limit(1);
     const allAccidents = accidents || [];
     const totalClaimsAmount = allAccidents.reduce((acc: number, a: any) => acc + (parseFloat(a.claim_amount) || 0), 0);
-    const lossRatioVal = totalPremiumVolume > 0 
-      ? ((totalClaimsAmount / totalPremiumVolume) * 100).toFixed(1) + '%' 
-      : '0.0%';
-    const operatingExp = (finScenarios && finScenarios[0]?.operating_expenses) 
-      ? parseFloat(finScenarios[0].operating_expenses) 
+
+    // Loss Ratio = Claims Incurred / Earned Premium (%)
+    const lossRatioPct = earnedPremium > 0
+      ? (totalClaimsAmount / earnedPremium) * 100
       : 0;
-    const combinedRatioVal = totalPremiumVolume > 0
-      ? (((totalClaimsAmount + operatingExp) / totalPremiumVolume) * 100).toFixed(1) + '%'
-      : '0.0%';
+    const lossRatioVal = lossRatioPct.toFixed(1) + '%';
+
+    // Expense Ratio: use actual operating expenses if available, else standard 30% industry loading
+    const operatingExpActual = (finScenarios && finScenarios[0]?.operating_expenses)
+      ? parseFloat(finScenarios[0].operating_expenses)
+      : null;
+    const operatingExp = operatingExpActual !== null ? operatingExpActual : earnedPremium * 0.30;
+    const expenseRatioPct = earnedPremium > 0 ? (operatingExp / earnedPremium) * 100 : 30;
+
+    // Combined Ratio = Loss Ratio + Expense Ratio (industry standard)
+    const combinedRatioPct = lossRatioPct + expenseRatioPct;
+    const combinedRatioVal = combinedRatioPct.toFixed(1) + '%';
+
+    // Active trips = only those with status 'in_progress' or created in last 7 days
+    const sevenDaysAgo = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).toISOString();
+    const activeTripsCount = allTrips.filter((t: any) =>
+      t.status === 'in_progress' || (t.created_at && t.created_at >= sevenDaysAgo)
+    ).length;
 
     const scoredAssessments = allAssessments.filter((a: any) => a.safety_score != null);
-    const lowRiskCount = scoredAssessments.filter((a: any) => a.safety_score >= 80).length;
+    const lowRiskCount    = scoredAssessments.filter((a: any) => a.safety_score >= 80).length;
     const mediumRiskCount = scoredAssessments.filter((a: any) => a.safety_score >= 50 && a.safety_score < 80).length;
-    const highRiskCount = scoredAssessments.filter((a: any) => a.safety_score < 50).length;
+    const highRiskCount   = scoredAssessments.filter((a: any) => a.safety_score < 50).length;
 
     res.json({
       portfolio: {
         totalCustomers,
         verifiedCustomers,
         totalTrips: allTrips.length,
+        activeTrips: activeTripsCount,
         totalQuotes,
-        totalPremiumVolume,
+        earnedPremium: Math.round(earnedPremium),
+        totalPremiumVolume: Math.round(totalPremiumVolume),
         avgAnnualPremium: avgPremium,
+        totalClaimsAmount: Math.round(totalClaimsAmount),
         lossRatio: lossRatioVal,
+        lossRatioPct: parseFloat(lossRatioPct.toFixed(1)),
+        expenseRatio: expenseRatioPct.toFixed(1) + '%',
         combinedRatio: combinedRatioVal,
+        combinedRatioPct: parseFloat(combinedRatioPct.toFixed(1)),
         activeDisputes: allDisputes.filter((d: any) => d.status === 'pending').length,
         riskDistribution: {
           lowRisk: lowRiskCount,
@@ -84,6 +112,7 @@ router.get('/portfolio', async (req: any, res: Response, next: NextFunction) => 
     next(err);
   }
 });
+
 
 const getUsersHandler = async (req: any, res: Response, next: NextFunction) => {
   try {

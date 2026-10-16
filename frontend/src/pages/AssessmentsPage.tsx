@@ -219,19 +219,19 @@ export default function AssessmentsPage() {
                       </div>
                       <div className="flex justify-between py-1 border-b border-slate-100">
                         <span className="text-slate-600">Harsh Braking Penalty</span>
-                        <span className="font-semibold text-red-600">-{fc.harsh_braking_penalty} pts</span>
+                        <span className="font-semibold text-red-600">-{Math.abs(fc.harsh_braking_penalty ?? 0)} pts</span>
                       </div>
                       <div className="flex justify-between py-1 border-b border-slate-100">
                         <span className="text-slate-600">Rapid Accel Penalty</span>
-                        <span className="font-semibold text-red-600">-{fc.rapid_accel_penalty} pts</span>
+                        <span className="font-semibold text-red-600">-{Math.abs(fc.rapid_accel_penalty ?? 0)} pts</span>
                       </div>
                       <div className="flex justify-between py-1 border-b border-slate-100">
                         <span className="text-slate-600">Speed Variance Penalty</span>
-                        <span className="font-semibold text-red-600">-{fc.speed_penalty} pts</span>
+                        <span className="font-semibold text-red-600">-{Math.abs(fc.speed_penalty ?? 0)} pts</span>
                       </div>
                       <div className="flex justify-between py-1 border-b border-slate-100">
                         <span className="text-slate-600">Data Quality Penalty</span>
-                        <span className="font-semibold text-red-600">-{fc.data_quality_penalty} pts</span>
+                        <span className="font-semibold text-red-600">-{Math.abs(fc.data_quality_penalty ?? 0)} pts</span>
                       </div>
                       <div className="flex justify-between py-2 border-t-2 border-slate-200 text-sm font-bold">
                         <span className="text-slate-800">Final Calculated Score</span>

@@ -182,7 +182,7 @@ describe('INSURE Authentication, OTP, Brevo SMTP, and RBAC Test Suite', () => {
           password: 'WrongPassword999!',
         });
 
-      expect(res.status).toBe(500);
+      expect(res.status).toBe(401);
       expect(res.body.error).toMatch(/Invalid email or password/);
     });
 
@@ -257,7 +257,7 @@ describe('INSURE Authentication, OTP, Brevo SMTP, and RBAC Test Suite', () => {
           password: testPassword,
         });
 
-      expect(res.status).toBe(500);
+      expect(res.status).toBe(401);
       expect(res.body.error).toMatch(/Invalid email or password/);
     });
 
